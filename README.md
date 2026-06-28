@@ -22,8 +22,9 @@ Hệ thống được triển khai theo mô hình 4 lớp: **Frontend → Backen
 4. Khi người dùng tải ảnh lá cây lên, backend gửi ảnh sang dịch vụ ML.
 5. ML xử lý ảnh, dự đoán bệnh và trả kết quả về backend.
 6. Backend chuẩn hóa nhãn bệnh, tra cứu dữ liệu bệnh trong database và lưu lịch sử dự đoán.
-7. Frontend hiển thị bệnh chính, top-k kết quả, Grad-CAM và tư vấn AI.
-8. Admin theo dõi dữ liệu huấn luyện, retrain model và xem các chỉ số đánh giá như accuracy, precision, recall, F1, loss.
+7. Frontend hiển thị bệnh chính, top-k kết quả, Grad-CAM.
+8. Người dùng chọn kết quả và xem tư vấn AI
+9. Admin theo dõi dữ liệu huấn luyện, retrain model và xem các chỉ số đánh giá như accuracy, loss, precision, recall, F1.
 
 ### Các thành phần chính
 
@@ -77,27 +78,33 @@ Hệ thống được triển khai theo mô hình 4 lớp: **Frontend → Backen
 ```text
 project-root/
 ├── README.md
-└── src/
-	├── backend/
-	│   ├── src/
-	│   │   ├── controllers/
-	│   │   ├── models/
-	│   │   ├── routes/
-	│   │   └── app.js
-	│   └── scripts/
-	├── frontend/
-	│   └── src/
-	│       ├── components/
-	│       ├── pages/
-	│       ├── services/
-	│       └── App.jsx
-	└── ml/
-		├── datasets/
-		├── gop_dataset/
-		├── organized_dataset/
-		├── split_dataset/
-		├── app.py
-		└── train.py
+├── src/
+│	├── backend/
+│	│   ├── src/
+│	│   │   ├── controllers/
+│	│   │   ├── models/
+│	│   │   ├── routes/
+│	│   │   └── app.js
+│	│   └── scripts/
+│	├── frontend/
+│	│   └── src/
+│	│       ├── components/
+│	│       ├── pages/
+│	│       ├── services/
+│	│       └── App.jsx
+│	└── ml/
+│		├── datasets/
+│		├── gop_dataset/
+│		├── organized_dataset/
+│		├── split_dataset/
+│		├── app.py
+│		└── train.py
+└── docs/
+	├── Hướng dẫn sử dụng.docx
+	├── poster-tn-da22tta-nguyenphucan.pdf
+	├── tn-da22tta-nguyenphucan.docx
+	├── tn-da22tta-nguyenphucan.pdf
+	├── tn-da22tta-nguyenphucan.pptx
 ```
 
 ## 6. Dữ liệu huấn luyện ML
@@ -106,21 +113,21 @@ Hiện tại quy trình dữ liệu được chuẩn hóa theo 3 nguồn chính:
 
 - `src/ml/gop_dataset`: ảnh gốc từ 3 dataset nguồn.
 - `src/ml/organized_dataset`: tập dữ liệu đã được hợp nhất và chuẩn hóa theo nhãn bệnh.
-- `src/backend/uploads/training`: ảnh mới do admin tải lên để bổ sung dữ liệu huấn luyện.
+- `src/backend/uploads/training`: ảnh mới do admin tải lên để bổ sung dữ liệu huấn luyện (2 dataset và ảnh trên mạng).
 
 Khi retrain, hệ thống sẽ tổng hợp dữ liệu từ các nguồn này để tạo lại tập train/validation/test và sinh báo cáo huấn luyện mới.
 
 ## 7. Tính năng chính
 
-- Đăng ký, đăng nhập và xác thực JWT.
+- Đăng nhập và xác thực JWT.
 - Quản lý vườn cây, mẫu đất, nhật ký canh tác, chi phí và mùa vụ.
 - Chọn nhiều mẫu đất khi thêm hoặc sửa nhật ký / chi phí.
-- Dự đoán bệnh từ ảnh lá cây bằng AI.
+- Dự đoán bệnh từ ảnh lá hoặc quả của cây bằng AI.
 - Hiển thị top-k kết quả dự đoán và tư vấn AI.
 - Trang admin quản lý dữ liệu bệnh và trạng thái huấn luyện model.
-- Theo dõi kết quả train gần nhất, metrics validation và test.
+- Theo dõi kết quả train gần nhất, validation và test.
 - Bật/tắt chế độ bảo trì toàn hệ thống.
-- Giao diện responsive cho desktop và mobile.
+- Giao diện responsive cho desktop.
 
 ## 8. Cách chạy chương trình
 
@@ -186,9 +193,9 @@ python app.py
 ### User
 
 - Đăng nhập và quản lý thông tin cá nhân.
-- Xem vườn cây, nhật ký, chi phí, mùa vụ.
-- Tải ảnh lên để dự đoán bệnh.
-- Xem lịch sử dự đoán và tư vấn AI.
+- Quản lý vườn cây, nhật ký, chi phí, mùa vụ.
+- Tải ảnh lên để dự đoán bệnh và xem tư vấn AI.
+- Xem lịch sử dự đoán.
 
 ### Admin
 
